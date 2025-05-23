@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { useRef, useState } from "react";
 
-const STREAM_SRC = "http://166.62.119.4:8000/stream";
+const STREAM_SRC = "https://166.62.119.4:8000/stream";
 
 export default function PlayButton() {
     const audioRef = useRef<HTMLAudioElement>(null);
