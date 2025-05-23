@@ -15,6 +15,11 @@ const nextConfig = {
             destination: 'https://rainydawg.sanity.studio',
             permanent: true,
           },
+          {
+            source: "/api/audio",
+            destination: "http://166.62.119.4:8000/stream",
+            permanent: true,
+          }
         ]
       },
 };
