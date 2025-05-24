@@ -2,7 +2,6 @@
 import Image from "next/image"
 import { useRef, useState } from "react";
 
-
 export default function PlayButton() {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -32,7 +31,7 @@ export default function PlayButton() {
                 )}
             </button>
             {/* rainy dawg was down */}
-            <audio ref={audioRef} src="https://cp10.shoutcheap.com:18383/stream" preload="none"></audio>
+            <audio ref={audioRef} src="/api/audio" preload="none"></audio>
         </>
     )
 }
