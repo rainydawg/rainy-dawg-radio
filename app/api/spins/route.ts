@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
+import { redis } from "../../../redis";
 
 type Spin = { music: string; artist: string; image: string; }
 type Show = { start: string; end: string; title: string; }
 
+const CACHE_KEY = 'spinitron:latestSpin';
+const CACHE_TTL = 10; // in seconds
+
 async function getSpins(): Promise<Spin> {
   return fetch(`https://spinitron.com/api/spins`, {
     headers: {
-      'Authorization': `Bearer ${"VIT_hdbWICcgF3nGwvcLJCf6"}`
+      'Authorization': `Bearer ${process.env.SPINITRON_API_KEY}`
     },
     cache: 'no-store'
   }).then(async (res) => {
@@ -21,7 +25,7 @@ async function getSpins(): Promise<Spin> {
     return {
       music: "Loading...",
       artist: "Loading...",
-      image: "Loading..."
+      image: ""
     }
   });
 }
@@ -29,7 +33,7 @@ async function getSpins(): Promise<Spin> {
 async function getShows(): Promise<Show> {
   return fetch(`https://spinitron.com/api/shows`, {
     headers: {
-      'Authorization': `Bearer ${"VIT_hdbWICcgF3nGwvcLJCf6"}`
+      'Authorization': `Bearer ${process.env.SPINITRON_API_KEY}`
     },
     cache: 'no-store'
   }).then(async (res) => {
@@ -68,7 +72,34 @@ async function getShows(): Promise<Show> {
 export async function GET (
   request: Request
 ) {
-  const spins = await getSpins();
-  const shows = await getShows();
-  return NextResponse.json({ ...spins, ...shows });
+  try {
+    // Try to get data from cache
+    const cachedData = await redis.get(CACHE_KEY);
+
+    if (cachedData) { return NextResponse.json(cachedData); }
+
+    // If not in cache, fetch from APIs
+    const [spins, shows] = await Promise.all([getSpins(), getShows()]);
+    const combinedData = { ...spins, ...shows };
+
+    // Store data in cache
+    try {
+      await redis.set(CACHE_KEY, JSON.stringify(combinedData), {ex: CACHE_TTL});
+    } catch (cacheError) {
+      console.error("Error setting cache:", cacheError);
+    }
+
+    return NextResponse.json(combinedData);
+
+  } catch (error) {
+    console.error("Error in GET handler:", error);
+    return NextResponse.json({
+      music: "Error loading...",
+      artist: "Error loading...",
+      image: "",
+      start: "Error loading...",
+      end: "Error loading...",
+      title: "Error loading..."
+    }, { status: 500 });
+  }
 }
