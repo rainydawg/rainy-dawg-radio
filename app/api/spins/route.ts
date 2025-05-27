@@ -76,7 +76,13 @@ export async function GET (
     // Try to get data from cache
     const cachedData = await redis.get(CACHE_KEY);
 
-    if (cachedData) { return NextResponse.json(cachedData); }
+    if (cachedData) {
+      return NextResponse.json(cachedData, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
+        }
+      });
+    }
 
     // If not in cache, fetch from APIs
     const [spins, shows] = await Promise.all([getSpins(), getShows()]);
@@ -100,6 +106,8 @@ export async function GET (
       start: "Error loading...",
       end: "Error loading...",
       title: "Error loading..."
-    }, { status: 500 });
+    }, { status: 500, headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate'
+    } });
   }
 }
