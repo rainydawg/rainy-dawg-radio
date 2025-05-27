@@ -6,7 +6,7 @@ type Show = { start: string; end: string; title: string; }
 async function getSpins(): Promise<Spin> {
   return fetch(`https://spinitron.com/api/spins`, {
     headers: {
-      'Authorization': `Bearer ${"VIT_hdbWICcgF3nGwvcLJCf6"}`
+      'Authorization': `Bearer ${process.env.SPINITRON_API_KEY}`
     },
     cache: 'no-store'
   }).then(async (res) => {
@@ -29,7 +29,7 @@ async function getSpins(): Promise<Spin> {
 async function getShows(): Promise<Show> {
   return fetch(`https://spinitron.com/api/shows`, {
     headers: {
-      'Authorization': `Bearer ${"VIT_hdbWICcgF3nGwvcLJCf6"}`
+      'Authorization': `Bearer ${process.env.SPINITRON_API_KEY}`
     },
     cache: 'no-store'
   }).then(async (res) => {
