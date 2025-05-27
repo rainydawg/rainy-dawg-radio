@@ -100,7 +100,7 @@ export async function GET (
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache, no-store, must-revalidate'
-    });
+    }});
   } catch (error) {
     console.error("Error in GET handler:", error);
     return NextResponse.json({
