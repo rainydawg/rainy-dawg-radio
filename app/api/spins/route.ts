@@ -79,6 +79,7 @@ export async function GET (
     if (cachedData) {
       return NextResponse.json(cachedData, {
         headers: {
+          'Content-Type': 'application/json',
           'Cache-Control': 'no-cache, no-store, must-revalidate'
         }
       });
@@ -95,8 +96,11 @@ export async function GET (
       console.error("Error setting cache:", cacheError);
     }
 
-    return NextResponse.json(combinedData);
-
+    return NextResponse.json(combinedData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+    });
   } catch (error) {
     console.error("Error in GET handler:", error);
     return NextResponse.json({
@@ -107,6 +111,7 @@ export async function GET (
       end: "Error loading...",
       title: "Error loading..."
     }, { status: 500, headers: {
+      'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate'
     } });
   }
