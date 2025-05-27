@@ -7,6 +7,8 @@ type Show = { start: string; end: string; title: string; }
 const CACHE_KEY = 'spinitron:latestSpin';
 const CACHE_TTL = 10; // in seconds
 
+export const dynamic = 'force-dynamic'; // disable static caching
+
 async function getSpins(): Promise<Spin> {
   return fetch(`https://spinitron.com/api/spins`, {
     headers: {
