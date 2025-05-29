@@ -50,7 +50,7 @@ export default function Post() {
           </div>
       </header>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {posts.map((post, index) => (
+          {posts?.filter(Boolean).map((post, index) => (
           <Link key= {post.slug.current} href={`/blog/${post.slug.current}`} className="relative outline outline-1 rounded-sm bg-white outline-gray-300
                     p-2 mx-10 my-10 hover:shadow-lg">
           {post?.mainImage?.asset?.url ? (
