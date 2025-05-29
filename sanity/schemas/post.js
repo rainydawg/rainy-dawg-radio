@@ -35,6 +35,7 @@ export const post = {
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required().error('A main image is required'),
       fields: [
         {
           name: 'alt',
