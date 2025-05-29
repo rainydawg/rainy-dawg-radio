@@ -37,7 +37,7 @@ const currJobs: JobPost[] = [
     }
 ]
 
-const TeamApps = () => {
+const TeamApps = async () => {
     // Keeping this commented out until we fix cacheing
     const fetchedJobs = await getData();
     return (
