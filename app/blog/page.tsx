@@ -53,7 +53,19 @@ export default function Post() {
         {posts.map((post, index) => (
           <Link key= {post.slug.current} href={`/blog/${post.slug.current}`} className="relative outline outline-1 rounded-sm bg-white outline-gray-300
                     p-2 mx-10 my-10 hover:shadow-lg">
-          <Image src={post.mainImage.asset.url} alt={post.title} width='400' height='400' className="w-[400px] h-[400px] p-6 object-cover" />
+          {post?.mainImage?.asset?.url ? (
+            <Image
+              src={post.mainImage.asset.url}
+              alt={post.title}
+              width={400}
+              height={400}
+              className="w-[400px] h-[400px] p-6 object-cover"
+            />
+          ) : (
+            <div className="w-[400px] h-[400px] p-6 bg-gray-200 flex items-center justify-center text-gray-500">
+                No Image
+            </div> )}
+
           <h3 className="text-2xl text-center font-semibold my-2">{post.title}</h3>
           <p className="text-center mb-8">Published: {new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
           <div className='absolute -left-6 -bottom-6 outline outline-1 rounded-sm outline-gray-300
