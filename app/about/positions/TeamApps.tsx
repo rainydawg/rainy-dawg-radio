@@ -39,14 +39,14 @@ const currJobs: JobPost[] = [
 
 const TeamApps = () => {
     // Keeping this commented out until we fix cacheing
-    // const fetchedJobs = await getData();
+    const fetchedJobs = await getData();
     return (
         <div>
             <Image src='/joinTheTeam.png' alt="join the team" width={400}  height={400}
             className='mx-auto mb-20'/>
 
             <div className='grid grid-cols-2 gap-4 px-10 place-content-center' style={{margin:"auto"}}>
-                {currJobs.map((job, index) => (
+                {fetchedJobs.map((job, index) => (
                     <Job 
                         key={index} 
                         title={job.title} 
