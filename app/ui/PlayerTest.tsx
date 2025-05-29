@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import PlayButton from "./PlayButton";
 import Image from "next/image";
-const REQUEST_RATE = 1000 * 10; // 10 seconds
+const REQUEST_RATE = 1000 * 3; // 3 seconds
 
 function Player() {
   const [spins, setSpins] = useState<any>(null);
