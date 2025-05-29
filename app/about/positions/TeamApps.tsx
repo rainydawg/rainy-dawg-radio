@@ -49,8 +49,8 @@ const TeamApps = async () => {
                 {fetchedJobs.map((job, index) => (
                     <Job 
                         key={index} 
-                        title={job.title} 
-                        desc={job.desc} 
+                        title={job.jobname} 
+                        desc={job.description} 
                         open={job.open}
                         link={job.appUrl}/>
                 ))}
