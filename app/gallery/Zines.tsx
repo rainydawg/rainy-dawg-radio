@@ -10,13 +10,8 @@ type Zine = {
 const allZines: Zine[] = [
     {
         coverUrl: "/zine23.png",
-        date: "2024",
-        link: "https://issuu.com/rdrzine/docs/final_zine_issuu",
-    },
-    {
-        coverUrl: "/zine23.png",
-        date: "2023",
-        link: "https://issuu.com/rdrzine/docs/final_zine_issuu",
+        date: "2025",
+        link: "https://archive.org/details/zineeee-for-ia_202505/Rainy%20Dawg%20Zine%202025/",
     },
 ]
 
