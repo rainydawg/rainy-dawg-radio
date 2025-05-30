@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import { client } from "../../sanity/lib/client";
 import Link from "next/link";
-import { PortableText } from "@portabletext/react";
-// import ExampleCarouselImage from 'components/ExampleCarouselImage';
 
 async function getData() {
   const query = `*[_type == "post"] | order(publishedAt desc) [0..1] {
@@ -21,67 +19,85 @@ async function getData() {
     publishedAt,
   }`
 
-
   const res = await client.fetch(query);
   return res;
 }
 
 export default function MainCarousel() {
-  const [post, setPost] = useState();
+  const [posts, setPosts] = useState<any[] | null>(null);
 
   useEffect(() => {
-    const fetchedPost = async () => {
-      const fetchedPost = await getData();
-      setPost(fetchedPost);
-      console.log(fetchedPost);
+    const fetchPosts = async () => {
+      const data = await getData();
+      setPosts(data);
     };
 
-    fetchedPost();
+    fetchPosts();
   }, []);
+
+  if (!posts) {
+    return <div className="p-10">Loading...</div>;
+  }
+
+  if (posts.length < 2) {
+    return <div className="p-10">Not enough posts to display the carousel.</div>;
+  }
 
   return (
     <Carousel>
+      {/* First post */}
       <div className="flex flex-col lg:flex-row lg:p-10">
         <div className="lg:w-1/2 lg:pl-20 self-center">
-            {post ? (<Image src={post[0]['mainImage']['asset']['url']} className="w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] object-cover" width={500} height={500} objectFit="cover" alt="Descriptive alt text"/>) : (<></>)}
-          {/* <Image src="./latestblogsticker.svg" width={300} height={300} alt=""/> */}
+          <Image
+            src={posts[0]?.mainImage?.asset?.url}
+            className="w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] object-cover"
+            width={500}
+            height={500}
+            alt={posts[0]?.title || "Post image"}
+          />
         </div>
         <div className="px-20 lg:w-1/2 lg:pr-20 self-center">
-          <div className="">
-            Blog Post
-          </div>
-          <div className={"font-mono large-heading font-bold "}>
-            {post ? (<>{post[0]['title']}</>) : (<></>)}
+          <div>Blog Post</div>
+          <div className="font-mono large-heading font-bold">
+            {posts[0]?.title}
           </div>
           <div className="py-5 hidden lg:flex">
-            {post ? (<>{post[0]['summary']}</>) : (<></>)}
+            {posts[0]?.summary}
           </div>
           <div>
-            {post ? (<Link href={`/blog/${post[0]['slug']['current']}`} className="hover:underline">
+            <Link href={`/blog/${posts[0]?.slug?.current}`} className="hover:underline">
               Read more
-            </Link>):(<></>)}
+            </Link>
           </div>
         </div>
       </div>
-      <div className="flex flex-row p-10">
-        <div className="w-1/2 pl-20 self-center">
-            {post ? (<Image src={post[1]['mainImage']['asset']['url']} className="w-[500px] h-[500px] object-cover" width={500} height={500} objectFit="cover" alt="Descriptive alt text"/>) : (<></>)}
-          {/* <Image src="./latestblogsticker.svg" width={300} height={300} alt=""/> */}
+
+      {/* Second post */}
+      <div className="flex flex-col lg:flex-row lg:p-10">
+        <div className="lg:w-1/2 lg:pl-20 self-center">
+          <Image
+            src={posts[1]?.mainImage?.asset?.url}
+            className="w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] object-cover"
+            width={500}
+            height={500}
+            alt={posts[1]?.title || "Post image"}
+          />
         </div>
-        <div className="w-1/2 pr-20 self-center">
-          <div className="text-3xl font-bold">
-            {post ? (<>{post[1]['title']}</>) : (<></>)}
+        <div className="px-20 lg:w-1/2 lg:pr-20 self-center">
+          <div>Blog Post</div>
+          <div className="font-mono large-heading font-bold">
+            {posts[1]?.title}
           </div>
-          <div className="py-5">
-            {post ? (<>{post[1]['summary']}</>) : (<></>)}
+          <div className="py-5 hidden lg:flex">
+            {posts[1]?.summary}
           </div>
           <div>
-            {post ? (<Link href={`/blog/${post[1]['slug']['current']}`} className="hover:underline">
+            <Link href={`/blog/${posts[1]?.slug?.current}`} className="hover:underline">
               Read more
-            </Link>):(<></>)}
+            </Link>
           </div>
         </div>
       </div>
     </Carousel>
   );
-};
+}
