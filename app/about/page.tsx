@@ -28,7 +28,7 @@ function ApplicationDescription() {
             </div>
             <div>
                 <header className='font-mono mt-10 medium-heading font-semibold '>Blog</header>
-                <p> Writing for the blog is always an option! Email Steven, our Music Director, if you’d like to get involved! Asuwrdmd@uw.edu </p>
+                <p> Writing for the blog is always an option! Email Livia, our Music Director, if you’d like to get involved! Asuwrdmd@uw.edu </p>
             </div>
         </section>
     );
