@@ -21,7 +21,7 @@ const nextConfig = {
       return [
         {
           source: "/api/audio",
-          destination: "http://166.62.119.4:8000/stream",
+          destination: "http://174.204.67.150:8000/stream",
         },
       ];
     },
