@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import PlayButton from "./PlayButton";
 import Image from "next/image";
-const REQUEST_RATE = 1000 * 3; // 3 seconds
+const REQUEST_RATE = 1000 * 8; // 8 seconds (changed from 3 seconds on 5/10/26 by Brenan to fix website track title "error loading...")
 
 function Player() {
   const [spins, setSpins] = useState<any>(null);
