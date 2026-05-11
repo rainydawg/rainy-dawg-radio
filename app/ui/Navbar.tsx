@@ -21,9 +21,9 @@ export default function Navbar() {
         </nav>
         {showSchedule && (
             <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50" onClick={() => setShowSchedule(false)}>
-                <div className="relative max-w-4xl max-h-screen p-4" onClick={e => e.stopPropagation()}>
+                <div className="relative p-4" onClick={e => e.stopPropagation()}>
                     <button onClick={() => setShowSchedule(false)} className="absolute top-2 right-2 bg-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-black">✕</button>
-                    <Image src="/schedule.png" width={900} height={600} alt="Station Schedule" className="object-contain w-full h-auto max-h-screen max-w-[90vw]"/>
+                    <Image src="/schedule.png" width={900} height={600} alt="Station Schedule" className="object-contain max-h-[85vh] max-w-[85vw] w-auto h-auto"/>
                 </div>
             </div>
         )}
