@@ -21,7 +21,7 @@ const nextConfig = {
       return [
         {
           source: "/api/audio",
-          destination: "http://128.95.18.72:8000/stream",
+          destination: "https://stream.rainydawg.org/stream",
         },
       ];
     },
